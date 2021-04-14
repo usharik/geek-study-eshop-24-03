@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import ru.geekbrains.controller.repr.ProductRepr;
 import ru.geekbrains.service.model.LineItem;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Scope(scopeName = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class CartServiceImpl implements CartService {
+public class CartServiceImpl implements CartService, Serializable {
 
     private final Map<LineItem, Integer> lineItems;
 
@@ -49,9 +50,20 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    public void removeProduct(ProductRepr productRepr, String color, String material) {
+        LineItem lineItem = new LineItem(productRepr, color, material);
+        lineItems.remove(lineItem);
+    }
+
+    @Override
     public List<LineItem> getLineItems() {
         lineItems.forEach(LineItem::setQty);
         return new ArrayList<>(lineItems.keySet());
+    }
+
+    @Override
+    public void updateAllQty(Map<Long, Integer> productIdQtyMap) {
+        // TODO
     }
 
     @JsonIgnore

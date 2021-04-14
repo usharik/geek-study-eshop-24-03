@@ -1,9 +1,10 @@
 package ru.geekbrains.controller.repr;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class ProductRepr {
+public class ProductRepr implements Serializable {
 
     private Long id;
 
