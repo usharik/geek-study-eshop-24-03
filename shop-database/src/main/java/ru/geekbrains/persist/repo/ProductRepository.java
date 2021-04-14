@@ -17,7 +17,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
             "inner join fetch p.brand")
     List<Product> findAllWithPictureFetch();
 
-    @Query("select p " +
+    @Query("select distinct p " +
             " from Product p " +
             " left join fetch p.pictures " +
             " inner join fetch p.category " +
